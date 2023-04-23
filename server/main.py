@@ -1,13 +1,25 @@
+import uvicorn
 from fastapi import FastAPI
+
+from usecases.predection import router
 
 app = FastAPI()
 
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
+def main():
+    configure()
+    uvicorn.run(app)
 
 
-@app.get("/hello/{name}")
-async def say_hello(name: str):
-    return {"message": f"Hello {name}"}
+def configure():
+    configure_routers()
+
+
+def configure_routers():
+    app.include_router(router)
+
+
+if __name__ == "__main__":
+    main()
+else:
+    configure()
