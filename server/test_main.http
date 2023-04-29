@@ -1,11 +1,13 @@
-# Test your FastAPI endpoints
+### predict labels endpoint
+POST {{host}}/predict
+accept: application/json
+Content-Type: multipart/form-data; boundary=WebAppBoundary
 
-GET http://127.0.0.1:8000/
-Accept: application/json
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="sample.csv"
+
+< sample.csv
+--WebAppBoundary--
 
 ###
 
-GET http://127.0.0.1:8000/hello/meriem
-Accept: application/json
-
-###

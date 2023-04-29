@@ -10,14 +10,18 @@ client = TestClient(app)
 
 
 @pytest.fixture
-def create_temp_csv(tmp_path):
+def dummy_dataframe():
     NUMBER_OF_FEATURES = 188
-    data = pd.DataFrame(
-        [[0] * NUMBER_OF_FEATURES,
-         [0] * NUMBER_OF_FEATURES]
+    return pd.DataFrame(
+        [[0.] * NUMBER_OF_FEATURES,
+         [0.] * NUMBER_OF_FEATURES]
     )
+
+
+@pytest.fixture
+def create_temp_csv(dummy_dataframe, tmp_path):
     path = tmp_path / "test.csv"
-    data.to_csv(path, index=False)
+    dummy_dataframe.to_csv(path, index=False, header=False)
     yield path
     shutil.rmtree(tmp_path)
 
