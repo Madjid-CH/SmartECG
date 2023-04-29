@@ -6,3 +6,5 @@ pytest
 httpx
 
 pydantic
+numpy
+pandera

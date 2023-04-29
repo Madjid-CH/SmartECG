@@ -6,6 +6,11 @@ from usecases.predection import router
 app = FastAPI()
 
 
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
+
+
 def main():
     configure()
     uvicorn.run(app)
