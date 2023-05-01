@@ -11,7 +11,7 @@ client = TestClient(app)
 
 @pytest.fixture
 def dummy_dataframe():
-    NUMBER_OF_FEATURES = 188
+    NUMBER_OF_FEATURES = 187
     return pd.DataFrame(
         [[0.] * NUMBER_OF_FEATURES,
          [0.] * NUMBER_OF_FEATURES]
