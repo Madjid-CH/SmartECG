@@ -154,8 +154,8 @@ def show_value_on_bar(a_dict: dict):
 
 
 def sub_percentage_of(X, y, percentage=0.1):
-    sub_size = int(len(X) * percentage)
-    return X[:sub_size], y[:sub_size]
+    random_indices = np.random.choice(len(X), int(len(X) * percentage), replace=False)
+    return X[random_indices], y[random_indices]
 
 
 def plot_sample_images(X, y, labels, number_of_samples=6):
