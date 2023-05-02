@@ -1,10 +1,10 @@
-import os
 import time
 
 import numpy as np
+import pandas as pd
+import seaborn as sns
 import tensorflow.keras as tk
 import tensorflow.keras.layers as l
-
 from matplotlib import pyplot as plt
 
 
@@ -158,15 +158,6 @@ def sub_percentage_of(X, y, percentage=0.1):
     return X[:sub_size], y[:sub_size]
 
 
-def reduce_dataset_size_if_working_locally():
-    global X_train, y_train, X_valid, y_valid, X_test, y_test
-    # if i'm not in kaggle or colab, i'm working locally
-    if not os.path.exists('/kaggle/working') and not os.path.exists('/content'):
-        X_train, y_train = sub_percentage_of(X_train, y_train, 0.1)
-        X_valid, y_valid = sub_percentage_of(X_valid, y_valid, 0.1)
-        X_test, y_test = sub_percentage_of(X_test, y_test, 0.1)
-
-
 def plot_sample_images(X, y, labels, number_of_samples=6):
     def get_label_name(i: int):
         return labels[i]
@@ -183,3 +174,22 @@ def plot_sample_images(X, y, labels, number_of_samples=6):
         plt.axis('off')
         plt.title(get_label_name(label))
     plt.show()
+
+
+def plot_categorical_distribution_with_percentage(data: pd.DataFrame, column: str):
+    percentages = [count / data.shape[0] * 100 for count in data[column].value_counts()]
+    fig, ax = plt.subplots(figsize=(12, 6))
+    sns.countplot(
+        x=data[column],
+        ax=ax,
+        palette="bright",
+        order=data[column].value_counts().index
+    )
+    ax.set_xticklabels(ax.get_xticklabels(), rotation=15)
+    for percentage, count, p in zip(
+            percentages,
+            data[column].value_counts(sort=True).values, ax.patches):
+        percentage = f'{np.round(percentage, 2)}%'
+        x = p.get_x() + p.get_width() / 2 - 0.4
+        y = p.get_y() + p.get_height()
+        ax.annotate(str(percentage) + " / " + str(count), (x, y), fontsize=12, fontweight='bold')
