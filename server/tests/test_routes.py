@@ -10,7 +10,7 @@ client = TestClient(app)
 
 @pytest.fixture
 def dummy_dataframe():
-    NUMBER_OF_FEATURES = 188
+    NUMBER_OF_FEATURES = 187
     return pd.DataFrame(
         [[0.] * NUMBER_OF_FEATURES,
          [0.] * NUMBER_OF_FEATURES]
@@ -30,4 +30,4 @@ def test_predict_csv(create_temp_csv):
         response = client.post("/predict", files={"file": f})
 
     assert response.status_code == 200
-    assert response.json() == {"Labels": [0, 0]}
+    assert response.json() == {'Labels': ['Normal', 'Normal']}
