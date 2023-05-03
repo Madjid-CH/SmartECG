@@ -28,6 +28,7 @@ const Upload = () => {
           "Content-Type": "multipart/form-data",
         },
       });
+      console.log(response.data.Labels)
       setResult(response.data.Labels)
       navigate('/predictionsTable', { state: { result: response.data.Labels} });
     } catch (error) {
@@ -48,9 +49,9 @@ const Upload = () => {
             name="file"
             onChange={handleFileChange} />
 
-          <div class="d-flex flex-column justify-content-center align-items-center">
+          <div className="d-flex flex-column justify-content-center align-items-center">
             <MdCloudUpload color='#2ca3fa' size={120}/>
-            <p class="text-center">Browse files to upload</p>
+            <p className="text-center">Browse files to upload</p>
           </div>
           </div>   
           </div>
