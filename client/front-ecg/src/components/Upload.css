@@ -1,7 +1,7 @@
 .container-upload{
     border: 2px dashed #2ca3fa;
-    height: 380px;
-    width: 600px;
+    height: 25em;
+    width: 40em;
     cursor: pointer;
     border-radius: 5px;
 }

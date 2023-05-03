@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from "./pages/LandingPage"
 import Register from './components/Register';
 import Predict from "./pages/predict"
+import PredictionsTable from "./pages/PredictionsTable"
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
     <Route path="/" element={<LandingPage/>} />
     <Route path="register" element={<Register/>}/>
     <Route path="predict" element={<Predict/>}/>
+    <Route path="predictionsTable" element={<PredictionsTable/>}/>
     </Routes>
   </Router>
   );

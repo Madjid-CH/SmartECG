@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import {MdCloudUpload, MdDelete} from 'react-icons/md';
 import { AiFillFileImage } from 'react-icons/ai'
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 import './Upload.css'
 
 const Upload = () => {
-  const [file, setFile] =useState(null)
+  const [file, setFile] = useState(null)
   const [fileName, setFileName] = useState("No selected file")
   const [result, setResult] = useState(null);
+  const navigate = useNavigate(); 
 
   const handleFileChange = ({target: {files}}) => {
     files[0] && setFileName(files[0].name)
@@ -26,7 +28,8 @@ const Upload = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(response.data)
+      setResult(response.data.Labels)
+      navigate('/predictionsTable', { state: { result: response.data.Labels} });
     } catch (error) {
       console.error(error);
     }
@@ -42,7 +45,8 @@ const Upload = () => {
             accept="application/vnd.ms-excel,text/csv,application/csv,text/x-csv"
             className="input-field"
             hidden
-            name="file"/>
+            name="file"
+            onChange={handleFileChange} />
 
           <div class="d-flex flex-column justify-content-center align-items-center">
             <MdCloudUpload color='#2ca3fa' size={120}/>
@@ -50,19 +54,20 @@ const Upload = () => {
           </div>
           </div>   
           </div>
-          <button type="submit">Predict</button>
+          <button className="mt-2 p-3 h5" style={{backgroundColor: "#2ca3fa", border: "none", borderRadius:"10px", color:"white",width: "32em"}} type="submit">Predict</button>
         </form>
         
         <section>
-          <AiFillFileImage color='#2ca3fa'/>
-          <span>
+          <AiFillFileImage color='#2ca3fa' className='m-3'/>
+          <span style={{fontSize:"1em" }}>
             {fileName}
             <MdDelete 
             color='#2ca3fa'
             onClick={() => {
               setFileName("No file selected")
               setFile(null)
-            }}/>
+            }}
+            className='m-3'/>
           </span>
         </section> 
     </main>
