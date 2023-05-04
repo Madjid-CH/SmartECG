@@ -1,7 +1,9 @@
 import pandas as pd
 import pandera as pa
-from tensorflow import keras as tk
 from fastapi import APIRouter, UploadFile, File, HTTPException, status
+from tensorflow import keras as tk
+
+from .utils import get_path
 
 columns_names = [f"x{i}" for i in range(187)]
 
@@ -11,16 +13,9 @@ schema = pa.DataFrameSchema({
 })
 
 
-def get_model_path():
-    path = __file__.split("\\")
-    path = "\\".join(path[:-2])
-    path += "\\models\\model.h5"
-    return path
-
-
 class Model:
     def __init__(self):
-        path = get_model_path()
+        path = get_path("\\models\\model.h5", go_up_by=-2)
         self.model = tk.models.load_model(path)
 
     def predict(self, data):
@@ -36,6 +31,7 @@ async def predict_batch(file: UploadFile = File(...)):
     check_is_csv_file(file)
     data = pd.read_csv(file.file, header=None, names=columns_names)
     validate_data(data)  # there is a huge performance penalty here
+    save_data(data)
     return {
         "Labels": get_predictions(data)
     }
@@ -65,3 +61,8 @@ def get_predictions(data):
                    "Fusion of paced and normal"]
     predictions = [class_names[prediction] for prediction in predictions]
     return predictions
+
+
+def save_data(data):
+    path = get_path("\\data\\data.csv")
+    data.to_csv(path, index=False, header=False)

@@ -2,7 +2,8 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from usecases.predection import router
+from usecases.predection import router as prediction_router
+from usecases.plotting import router as plotting_router
 
 app = FastAPI()
 
@@ -23,7 +24,8 @@ def configure():
 
 
 def configure_routers():
-    app.include_router(router)
+    app.include_router(plotting_router)
+    app.include_router(prediction_router)
 
 
 def configure_middleware():

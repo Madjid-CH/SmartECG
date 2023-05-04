@@ -9,5 +9,6 @@ Content-Disposition: form-data; name="file"; filename="sample.csv"
 < sample.csv
 --WebAppBoundary--
 
-###
+### get plot endpoint
+GET {{host}}/plot/1
 

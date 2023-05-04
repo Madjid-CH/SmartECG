@@ -31,3 +31,10 @@ def test_predict_csv(create_temp_csv):
 
     assert response.status_code == 200
     assert response.json() == {'Labels': ['Normal', 'Normal']}
+
+
+def test_get_ecg_plot(create_temp_csv):
+    response = client.get("/plot/1")
+
+    assert response.status_code == 200
+    assert response.headers["content-type"] == "image/jpeg"
