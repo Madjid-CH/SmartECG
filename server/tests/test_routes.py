@@ -1,8 +1,10 @@
+import os
 import shutil
 
 import pandas as pd
 import pytest
 from fastapi.testclient import TestClient
+
 from server.main import app
 
 client = TestClient(app)
@@ -12,7 +14,7 @@ client = TestClient(app)
 def dummy_dataframe():
     NUMBER_OF_FEATURES = 187
     return pd.DataFrame(
-        [[0.] * NUMBER_OF_FEATURES,
+        [[1.] * NUMBER_OF_FEATURES,
          [0.] * NUMBER_OF_FEATURES]
     )
 
@@ -33,8 +35,14 @@ def test_predict_csv(create_temp_csv):
     assert response.json() == {'Labels': ['Normal', 'Normal']}
 
 
-def test_get_ecg_plot(create_temp_csv):
-    response = client.get("/plot/1")
-
+def test_get_ecg_plot_success():
+    response = client.get("/plot/0")
     assert response.status_code == 200
     assert response.headers["content-type"] == "image/jpeg"
+    assert os.path.exists("../usecases/plots/0.jpg")
+
+
+def test_get_ecg_plot_index_out_of_bounds():
+    response = client.get("/plot/999999")
+    assert response.status_code == 400
+    assert response.json() == {"detail": "Index out of bounds"}
