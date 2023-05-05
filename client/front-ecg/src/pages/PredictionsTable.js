@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Container } from 'react-bootstrap'
+import { Container, Modal } from 'react-bootstrap'
 import CustomNavbarDark from '../components/customNavbarDark'
 import { useLocation } from 'react-router-dom';
 import { Table } from 'react-bootstrap';
@@ -8,9 +8,20 @@ import styled from "styled-components";
 const PredictionsTable = () => {
   const location = useLocation()
   const [results, setResult] = useState(location.state.result);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedImage, setSelectedImage] = useState('');
+  const [selectedPatientIndex, setSelectedPatientIndex] = useState(null);
   const handleViewClick = (index) => {
-    console.log(`View button clicked for Patient ${index + 1}`);
+    setSelectedImage(`http://localhost:8000/plot/${index + 1}`);
+    setSelectedPatientIndex(index+1);
+    setShowModal(true);
   };
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedImage('');
+    setSelectedPatientIndex(null);
+  };
+
   return (
     <Container>
         <CustomNavbarDark/>
@@ -34,6 +45,17 @@ const PredictionsTable = () => {
           ))}
         </tbody>
         </Table>
+         <Modal show={showModal} onHide={handleCloseModal} centered>
+         <Modal.Header closeButton>
+            <Modal.Title>Patient {selectedPatientIndex}  ECG</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <img src={selectedImage} alt="ECG" style={{ maxWidth: '100%', display: 'block', margin: '0 auto' }} />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={handleCloseModal}>Close</Button>
+          </Modal.Footer>
+        </Modal>
     </Container>
   )
 }
