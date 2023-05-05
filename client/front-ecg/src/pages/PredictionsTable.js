@@ -12,7 +12,7 @@ const PredictionsTable = () => {
   const [selectedImage, setSelectedImage] = useState('');
   const [selectedPatientIndex, setSelectedPatientIndex] = useState(null);
   const handleViewClick = (index) => {
-    setSelectedImage(`http://localhost:8000/plot/${index + 1}`);
+    setSelectedImage(`http://localhost:8000/plot/${index}`);
     setSelectedPatientIndex(index+1);
     setShowModal(true);
   };
