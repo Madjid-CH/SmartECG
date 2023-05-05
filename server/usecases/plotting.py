@@ -2,12 +2,12 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import FileResponse
-
+from typing import Union
 from .utils import get_path
 
 router = APIRouter()
 
-_data: pd.DataFrame | None = None
+_data: Union[pd.DataFrame, None] = None
 
 
 @router.get("/plot/{index}")
