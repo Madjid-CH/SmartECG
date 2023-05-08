@@ -17,9 +17,8 @@ function CustomNavbar() {
     <Navbar.Collapse id="navbar-nav">
       <Nav className="ms-auto">
         <Nav.Link className="text-light m-3" href="/">Home</Nav.Link>
-        <Nav.Link className="text-light m-3" href="/predict">Predict</Nav.Link>
-        <Nav.Link className="text-light m-3" href="/login">Login</Nav.Link>
-        <Button className="m-3"><Nav.Link href="/register">Register</Nav.Link></Button>
+        <Nav.Link className="text-light m-3" href="/predictionsTable">Predictions</Nav.Link>
+        <Button className="m-3"><Nav.Link href="/predict">Predict</Nav.Link></Button>
       </Nav>
     </Navbar.Collapse>
   </Container>

@@ -17,9 +17,8 @@ function CustomNavbarDark() {
     <Navbar.Collapse id="navbar-nav">
       <Nav className="ms-auto">
         <Nav.Link className="m-3" href="/">Home</Nav.Link>
-        <Nav.Link className="m-3" href="/predict">Predict</Nav.Link>
-        <Nav.Link className="m-3" href="/login">Login</Nav.Link>
-        <Button className="m-3"><Nav.Link href="/register" className="text-light">Register</Nav.Link></Button>
+        <Nav.Link className="m-3" href="/predictionsTable">Predictions</Nav.Link>
+        <Button className="m-3"><Nav.Link href="/predict" className="text-light">Predict</Nav.Link></Button>
       </Nav>
     </Navbar.Collapse>
   </Container>

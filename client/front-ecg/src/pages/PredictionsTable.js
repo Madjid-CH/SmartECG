@@ -7,7 +7,7 @@ import styled from "styled-components";
 
 const PredictionsTable = () => {
   const location = useLocation()
-  const [results, setResult] = useState(location.state.result);
+  const [results, setResult] = useState(location.state ? location.state.result : []);
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState('');
   const [selectedPatientIndex, setSelectedPatientIndex] = useState(null);
@@ -24,40 +24,44 @@ const PredictionsTable = () => {
 
   return (
     <Container>
-        <CustomNavbarDark/>
+      <CustomNavbarDark />
+      {results.length > 0 ? (
         <Table striped bordered hover className='mt-3'>
-        <thead>
-          <tr>
-            <th className="text-center">Patient</th>
-            <th className="text-center">Result</th>
-            <th className="text-center">ECG</th> 
-          </tr>
-        </thead>
-        <tbody>
-          {results.map((result, index) => (
-            <tr key={index}>
-              <td className="text-center">Patient {index + 1}</td>
-              <td className={result === 'Normal' ? 'text-center text-success' : 'text-center text-danger'}>{result}</td>
-              <td className="text-center">
-                <Button onClick={() => handleViewClick(index)}>View</Button>
-              </td>
+          <thead>
+            <tr>
+              <th className="text-center">Patient</th>
+              <th className="text-center">Result</th>
+              <th className="text-center">ECG</th>
             </tr>
-          ))}
-        </tbody>
+          </thead>
+          <tbody>
+            {results.map((result, index) => (
+              <tr key={index}>
+                <td className="text-center">Patient {index + 1}</td>
+                <td className={result === 'Normal' ? 'text-center text-success' : 'text-center text-danger'}>{result}</td>
+                <td className="text-center">
+                  <Button onClick={() => handleViewClick(index)}>View</Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </Table>
-         <Modal show={showModal} onHide={handleCloseModal} centered>
-         <Modal.Header closeButton>
-            <Modal.Title>Patient {selectedPatientIndex}  ECG</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <img src={selectedImage} alt="ECG" style={{ maxWidth: '100%', display: 'block', margin: '0 auto' }} />
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={handleCloseModal}>Close</Button>
-          </Modal.Footer>
-        </Modal>
+      ) : (
+        <p style={{ textAlign: 'center' }}>No predictions yet.</p>
+      )}
+      <Modal show={showModal} onHide={handleCloseModal} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Patient {selectedPatientIndex} ECG</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <img src={selectedImage} alt="ECG" style={{ maxWidth: '100%', display: 'block', margin: '0 auto' }} />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={handleCloseModal}>Close</Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
-  )
+  );  
 }
 const Button = styled.button`
   display: flex;
