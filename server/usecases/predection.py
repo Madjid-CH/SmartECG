@@ -1,9 +1,10 @@
 import pandas as pd
 import pandera as pa
+from cachetools import cached
 from fastapi import APIRouter, UploadFile, File, HTTPException, status
 from tensorflow import keras as tk
 
-from .utils import get_path
+from .utils import get_path, hash_dataframe, get_a_cache
 
 columns_names = [f"x{i}" for i in range(187)]
 
@@ -43,6 +44,7 @@ def check_is_csv_file(file):
                             detail="Invalid file format. Only CSV Files accepted.")
 
 
+@cached(get_a_cache(), key=hash_dataframe)
 def validate_data(data):
     try:
         schema.validate(data)
@@ -51,6 +53,7 @@ def validate_data(data):
                             detail="Invalid CSV file. Please check your file again.")
 
 
+@cached(get_a_cache(), key=hash_dataframe)
 def get_predictions(data):
     predictions = model.predict(data)
     predictions = predictions.argmax(axis=1).tolist()

@@ -1,16 +1,17 @@
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import RedirectResponse
 
-from usecases.predection import router as prediction_router
 from usecases.plotting import router as plotting_router
+from usecases.predection import router as prediction_router
 
 app = FastAPI()
 
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return RedirectResponse(url="/docs")
 
 
 def main():
