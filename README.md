@@ -1,4 +1,4 @@
-﻿# DL-projet
+﻿# SmartECG-Project
 
 ## initializing the project
 ### server
