@@ -4,9 +4,9 @@ accept: application/json
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
-Content-Disposition: form-data; name="file"; filename="sample.csv"
+Content-Disposition: form-data; name="file"; filename="ecg.csv"
 
-< sample.csv
+< ecg.csv
 --WebAppBoundary--
 
 ### get plot endpoint
