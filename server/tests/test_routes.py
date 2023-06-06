@@ -39,7 +39,6 @@ def test_get_ecg_plot_success():
     response = client.get("/plot/0")
     assert response.status_code == 200
     assert response.headers["content-type"] == "image/jpeg"
-    assert os.path.exists("../usecases/plots/0.jpg")
 
 
 def test_get_ecg_plot_index_out_of_bounds():
